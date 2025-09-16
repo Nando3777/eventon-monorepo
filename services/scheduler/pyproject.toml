@@ -5,21 +5,21 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "eventon-scheduler"
 version = "0.1.0"
-description = "EventOn scheduler service (FastAPI stub with OR-Tools placeholder)."
-readme = "README.md"
-requires-python = ">=3.10"
+description = "Optimisation scheduler service built on OR-Tools"
+requires-python = ">=3.11"
 dependencies = [
-    "fastapi>=0.95,<0.104",
-    "uvicorn[standard]>=0.20,<0.29",
-    "pydantic>=1.10,<2.0",
-    "ortools==9.10.4067",
+  "fastapi>=0.110,<1",
+  "uvicorn[standard]>=0.20,<0.30",
+  "pydantic>=2.6,<3",
+  "ortools==9.10.4067",
 ]
 
 [project.optional-dependencies]
-dev = [
-    "pytest",
-]
+dev = ["pytest"]
 
 [tool.uvicorn]
 app = "app.main:app"
+
+# Optional: formatter/linter versions as dev tools (installed via your env or requirements)
+# black >= 24.1.0, ruff >= 0.2.0
 
