@@ -3,9 +3,9 @@
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src",
-    "noEmit": false,
-    "declaration": true
+    "noEmit": false
   },
   "include": ["src"],
   "exclude": ["dist", "node_modules"]
 }
+
