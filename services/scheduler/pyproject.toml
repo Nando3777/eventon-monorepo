@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=67", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eventon-scheduler"
+version = "0.1.0"
+description = "EventOn scheduler service (FastAPI stub with OR-Tools placeholder)."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.95,<0.104",
+    "uvicorn[standard]>=0.20,<0.29",
+    "pydantic>=1.10,<2.0",
+    "ortools==9.10.4067",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+]
+
+[tool.uvicorn]
+app = "app.main:app"
+
