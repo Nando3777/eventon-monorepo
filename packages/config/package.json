@@ -1,0 +1,10 @@
+{
+  "name": "@eventon/config",
+  "version": "0.1.0",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
+}
