@@ -1,54 +1,24 @@
 import Fastify from 'fastify';
-import swagger from '@fastify/swagger';
-import { boot } from './boot';
-import healthRoutes from './routes/health';
-import tenantRequestIdPlugin from './plugins/tenant-request-id';
+import helmet from '@fastify/helmet';
+import cors from '@fastify/cors';
+import { PrismaClient } from '@prisma/client';
 
-export async function buildServer() {
-  boot();
-  const app = Fastify({
-    logger: true,
-  });
+const app = Fastify({ logger: true });
+await app.register(helmet);
+await app.register(cors, { origin: true });
 
-  await app.register(tenantRequestIdPlugin);
+const prisma = new PrismaClient();
 
-  await app.register(swagger, {
-    openapi: {
-      info: {
-        title: 'EventOn Core API',
-        description: 'Core API surface for EventOn services',
-        version: '0.1.0',
-      },
-      servers: [
-        {
-          url: 'http://localhost:3000',
-          description: 'Local development',
-        },
-      ],
-    },
-  });
+app.get('/health', async () => ({ ok: true }));
 
-  await app.register(healthRoutes);
+app.get('/tenants', async () => prisma.tenant.findMany());
 
-  app.get('/docs', async () => app.swagger());
+app.post('/tenants', async (req, reply) => {
+  const body = req.body as { name?: string };
+  if (!body?.name) return reply.code(400).send({ error: 'name required' });
+  const t = await prisma.tenant.create({ data: { name: body.name } });
+  return reply.code(201).send(t);
+});
 
-  return app;
-}
-
-export async function start() {
-  const app = await buildServer();
-  const port = Number.parseInt(process.env.PORT ?? '3000', 10);
-  const host = process.env.HOST ?? '0.0.0.0';
-
-  try {
-    await app.listen({ port, host });
-    app.log.info({ host, port }, 'Core API listening');
-  } catch (error) {
-    app.log.error(error, 'Failed to start core API');
-    process.exit(1);
-  }
-}
-
-if (require.main === module) {
-  start();
-}
+const port = Number(process.env.PORT || 8080);
+app.listen({ port, host: '0.0.0.0' });

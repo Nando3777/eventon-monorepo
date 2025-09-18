@@ -1,11 +1,15 @@
 {
-  "extends": "@eventon/config/tsconfig/node",
   "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "strict": true,
     "outDir": "dist",
-    "rootDir": "src",
-    "noEmit": false
+    "rootDir": "."
   },
-  "include": ["src"],
+  "include": ["src", "prisma"],
   "exclude": ["dist", "node_modules"]
 }
-

@@ -1,0 +1,17 @@
+{
+  "name": "@eventon/db",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prisma": "prisma",
+    "generate": "prisma generate",
+    "migrate": "prisma migrate dev"
+  },
+  "dependencies": {
+    "@prisma/client": "5.18.0"
+  },
+  "devDependencies": {
+    "prisma": "5.18.0"
+  }
+}
